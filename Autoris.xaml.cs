@@ -68,7 +68,7 @@ namespace Doctors
                             SQLiteCommand cmd2 = new SQLiteCommand(query2, connection);
                             cmd2.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
                             int countID = Convert.ToInt32(cmd2.ExecuteScalar());
-                            //Saver.Login = TbLogin.Text.ToLower();
+                            Saver.Login = TexBxLog.Text.ToLower();
                             //Saver.ID = countID;
                             connection.Close();
                             MessageBox.Show("Добро пожаловать!");

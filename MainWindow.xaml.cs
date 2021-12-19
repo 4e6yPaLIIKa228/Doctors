@@ -51,7 +51,7 @@ namespace Doctors
             using (SQLiteConnection connection = new SQLiteConnection(DBConnection.myConn))
             {
 
-                if (String.IsNullOrEmpty(TexBxLog.Text) || String.IsNullOrEmpty(PassBx.Password) || String.IsNullOrEmpty(TexBxOtchestv.Text))
+                if (String.IsNullOrEmpty(TexBxLog.Text) || String.IsNullOrEmpty(PassBx.Password) || String.IsNullOrEmpty(TexBxOtchestv.Text) || String.IsNullOrEmpty(BtFam.Text) || String.IsNullOrEmpty(BtFirst.Text) || String.IsNullOrEmpty(BtName.Text) || String.IsNullOrEmpty(TexBoxPolic.Text))
                 {
                     MessageBox.Show("Заполните поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -94,13 +94,17 @@ namespace Doctors
                     {
                         
                         {
-                            string query3 = $@"INSERT INTO Registrs ('Login','Phone','Pass') VALUES (@Login,@Phone,@Pass)";
+                            string query3 = $@"INSERT INTO Registrs ('Login','Phone','Pass','Surname','Name','MiddleName','Policy') VALUES (@Login,@Phone,@Pass,@Surname,@Name,@MiddleName,@Policy)";
                             SQLiteCommand cmd3 = new SQLiteCommand(query3, connection);
                             try
                             {
                                 cmd3.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
                                 cmd3.Parameters.AddWithValue("@Pass", PassBx.Password);
                                 cmd3.Parameters.AddWithValue("@Phone", TexBxOtchestv.Text.ToLower());
+                                cmd3.Parameters.AddWithValue("@Surname", BtFam.Text.ToLower());
+                                cmd3.Parameters.AddWithValue("@Name", BtName.Text.ToLower());
+                                cmd3.Parameters.AddWithValue("@MiddleName", BtFirst.Text.ToLower());
+                                cmd3.Parameters.AddWithValue("@Policy", TexBoxPolic.Text.ToLower());
                                 cmd3.ExecuteNonQuery();
                                 MessageBox.Show("Проверка пройдена. Аккаунт зарегистрирован.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                                 Autoris Aftoriz = new Autoris();
