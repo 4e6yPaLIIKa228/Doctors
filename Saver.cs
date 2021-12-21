@@ -10,5 +10,6 @@ namespace Doctors
     {
         public static string Login = "";
         public static int Proverka = 0;
+        public static int ID;
     }
 }

@@ -56,20 +56,23 @@ namespace Doctors
                     try
                     {
                         connection.Open();
-                        string query = $@"SELECT  COUNT(1) FROM Registrs WHERE Login=@Login AND Pass=@Pass";
+                        string query = $@"SELECT  COUNT(1) FROM USERS WHERE Login=@Login AND Pass=@Pass";
                         SQLiteCommand cmd = new SQLiteCommand(query, connection);
-                        string LoginLower = TexBxLog.Text.ToLower();
+                        //string LoginLower = TexBxLog.Text.ToLower();
+                        byte[] Pass;
+                        Сipher f = new Сipher();
+                        Pass = f.GetHashPassword(PassBx.Password);
                         cmd.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
-                        cmd.Parameters.AddWithValue("@Pass", PassBx.Password);
+                        cmd.Parameters.AddWithValue("@Pass", Pass);
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         if (count == 1)
                         {
-                            string query2 = $@"SELECT ID FROM Registrs WHERE Login=@Login";
+                            string query2 = $@"SELECT ID FROM USERS WHERE Login=@Login";
                             SQLiteCommand cmd2 = new SQLiteCommand(query2, connection);
                             cmd2.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
                             int countID = Convert.ToInt32(cmd2.ExecuteScalar());
                             Saver.Login = TexBxLog.Text.ToLower();
-                            //Saver.ID = countID;
+                            Saver.ID = countID;
                             connection.Close();
                             MessageBox.Show("Добро пожаловать!");
                             Menu menu = new Menu();

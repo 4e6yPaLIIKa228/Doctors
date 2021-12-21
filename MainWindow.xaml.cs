@@ -70,10 +70,15 @@ namespace Doctors
                 {
                     MessageBox.Show("Телефон должен быть 11 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                else if (TexBoxPolic.Text.Length != 11)
+                {
+                    MessageBox.Show("Полис должен быть равен 16 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
                 else
                 {
                     connection.Open();
-                    string query = $@"SELECT  COUNT(1) FROM  REGISTRS WHERE Login=@Login";
+                    string query = $@"SELECT  COUNT(1) FROM  USERS WHERE Login=@Login";
                     SQLiteCommand cmd = new SQLiteCommand(query, connection);
                     cmd.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
                     int count = Convert.ToInt32(cmd.ExecuteScalar());
@@ -83,7 +88,7 @@ namespace Doctors
                         MessageBox.Show("Login занят", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         pr = 1;
                     }
-                    string query2 = $@"SELECT  COUNT(1) FROM Registrs WHERE Phone=@Phone";
+                    string query2 = $@"SELECT  COUNT(1) FROM USERS WHERE Phone=@Phone";
                     SQLiteCommand cmd2 = new SQLiteCommand(query2, connection);
                     cmd2.Parameters.AddWithValue("@Phone", TexBxOtchestv.Text.ToLower());
                     int count2 = Convert.ToInt32(cmd2.ExecuteScalar());
@@ -93,7 +98,7 @@ namespace Doctors
                         MessageBox.Show("Телефон занят", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         pr2 = 1;
                     }
-                    string query4 = $@"SELECT  COUNT(1) FROM Registrs WHERE Mail=@Mail";
+                    string query4 = $@"SELECT  COUNT(1) FROM USERS WHERE Mail=@Mail";
                     SQLiteCommand cmd4 = new SQLiteCommand(query4, connection);
                     cmd2.Parameters.AddWithValue("@Mail", TexBoxMail.Text.ToLower());
                     int count4 = Convert.ToInt32(cmd2.ExecuteScalar());
@@ -107,12 +112,12 @@ namespace Doctors
                     {
                         try
                         {
-                            SmtpClient Smtp = new SmtpClient("smtp.mail.ru");
+                            SmtpClient Smtp = new SmtpClient("smtp.mail.ru", 25);
                             Smtp.UseDefaultCredentials = true;
                             Smtp.EnableSsl = true;
-                            Smtp.Credentials = new NetworkCredential("yarik.test@mail.ru", "UkRjn459Xwf2MNXDS6Zm");
+                            Smtp.Credentials = new NetworkCredential("fujiwara_1990@mail.ru", "5cFZ8MB4w731QH9zNAVW");
                             MailMessage Message = new MailMessage();
-                            Message.From = new MailAddress("yarik.test@mail.ru");
+                            Message.From = new MailAddress("fujiwara_1990@mail.ru");
                             Message.To.Add(new MailAddress(TexBoxMail.Text));
                             Message.To.Add(new MailAddress(TexBoxMail.Text));
                             Message.Subject = "Учёт записей к врачу.";
@@ -134,17 +139,21 @@ namespace Doctors
                         }
                         if (Saver.Proverka == 0)
                         {
-                            string query3 = $@"INSERT INTO Registrs ('Login','Phone','Pass','Surname','Policy','Mail') VALUES (@Login,@Phone,@Pass,@Surname,@Mail,@Policy)";
+                            string query3 = $@"INSERT INTO USERS ('Famil','Phone','Policy','Login','Pass','Mail') VALUES (@Famil,@Phone,@Policy,@Login,@Pass,@Mail)";
                             SQLiteCommand cmd3 = new SQLiteCommand(query3, connection);
                             try
                             {
-                                cmd3.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
-                                cmd3.Parameters.AddWithValue("@Pass", PassBx.Password);
+                                byte[] Pass;
+                                Сipher f = new Сipher();
+                                Pass = f.GetHashPassword(PassBx.Password);
+                                cmd3.Parameters.AddWithValue("@Famil", BtFam.Text.ToLower());
                                 cmd3.Parameters.AddWithValue("@Phone", TexBxOtchestv.Text.ToLower());
-                                cmd3.Parameters.AddWithValue("@Surname", BtFam.Text.ToLower());
-                                cmd3.Parameters.AddWithValue("@Mail", TexBoxMail.Text.ToLower());
                                 cmd3.Parameters.AddWithValue("@Policy", TexBoxPolic.Text.ToLower());
-                                //cmd3.ExecuteNonQuery();
+                                cmd3.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
+                                cmd3.Parameters.AddWithValue("@Pass", Pass);
+                                cmd3.Parameters.AddWithValue("@Mail", TexBoxMail.Text.ToLower());
+
+                                cmd3.ExecuteNonQuery();
                                 MessageBox.Show("Проверка пройдена. Аккаунт зарегистрирован.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                                 Autoris Aftoriz = new Autoris();
                                 this.Close();
@@ -160,5 +169,39 @@ namespace Doctors
                 }
             }
         }
+        public int i = 0;
+        private void BtFam_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = (Char.IsDigit(e.Text, 0)); //Только буквы         
+        }
+        public int a = 0;
+        private void BtFam_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+            a++;
+            if (a == 1)
+            {
+                BtFam.Text = BtFam.Text[0].ToString().ToUpper();
+            }
+            else
+            {
+                BtFam.SelectionStart = BtFam.Text.Length;
+            }
+            if (BtFam.Text.Length == 0)
+            {
+                a = 0;
+            }
+        } //Первая буква большая
+
+        private void TexBoxPolic_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(Char.IsDigit(e.Text, 0)); //Тольок цифры
+        }
+
+        private void TexBxOtchestv_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(Char.IsDigit(e.Text, 0)); //Тольок цифры
+        }
     }
- }
+}
+

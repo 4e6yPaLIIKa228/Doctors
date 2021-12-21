@@ -78,6 +78,7 @@
     <Compile Include="User.xaml.cs">
       <DependentUpon>User.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Сipher.cs" />
     <Page Include="Autoris.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

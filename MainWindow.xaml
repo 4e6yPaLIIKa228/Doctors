@@ -22,13 +22,13 @@
         <Button x:Name="BtReg" Content="Зарегистрироваться" HorizontalAlignment="Left" Height="50" Margin="559,347,0,0" VerticalAlignment="Top" Width="171" FontSize="16" Click="BtReg_Click"/>
         <PasswordBox x:Name="PassBx" HorizontalAlignment="Left" Height="26" Margin="564,226,0,0" VerticalAlignment="Top" Width="205" FontSize="18"/>
         <Label Content="Телефон:" HorizontalAlignment="Left" Height="35" Margin="471,178,0,0" VerticalAlignment="Top" Width="93" FontSize="20" Foreground="White"/>
-        <TextBox x:Name="TexBxOtchestv" HorizontalAlignment="Left" Height="26" Margin="564,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205" />
+        <TextBox x:Name="TexBxOtchestv" HorizontalAlignment="Left" Height="26" Margin="564,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205" PreviewTextInput="TexBxOtchestv_PreviewTextInput" />
         <TextBox x:Name="TexBxLog" HorizontalAlignment="Left" Height="26" Margin="564,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205"/>
         <Label Content="Логин:" HorizontalAlignment="Left" Height="39" Margin="489,139,0,0" VerticalAlignment="Top" Width="70" FontSize="20" Foreground="White"/>
         <Label Content="Фамилия:" HorizontalAlignment="Left" Height="39" Margin="58,139,0,0" VerticalAlignment="Top" Width="97" FontSize="20" Foreground="White"/>
-        <TextBox x:Name="BtFam" HorizontalAlignment="Left" Height="26" Margin="155,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205"/>
+        <TextBox x:Name="BtFam" HorizontalAlignment="Left" Height="26" Margin="155,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205" PreviewTextInput="BtFam_PreviewTextInput" TextChanged="BtFam_TextChanged"/>
         <Label Content="Полис:" HorizontalAlignment="Left" Height="39" Margin="82,183,0,0" VerticalAlignment="Top" Width="71" FontSize="20" Foreground="White"/>
-        <TextBox x:Name="TexBoxPolic" HorizontalAlignment="Left" Height="26" Margin="155,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205"/>
+        <TextBox x:Name="TexBoxPolic" HorizontalAlignment="Left" Height="26" Margin="155,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205" PreviewTextInput="TexBoxPolic_PreviewTextInput"/>
         <Label Content="Почта:" HorizontalAlignment="Left" Height="39" Margin="84,225,0,0" VerticalAlignment="Top" Width="71" FontSize="20" Foreground="White"/>
         <TextBox x:Name="TexBoxMail" HorizontalAlignment="Left" Height="26" Margin="155,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Width="205"/>
 
