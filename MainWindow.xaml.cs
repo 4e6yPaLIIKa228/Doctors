@@ -20,6 +20,8 @@ using System.Drawing;
 using System.Net.Mail;
 using System.Net;
 
+
+
 namespace Doctors
 {
     /// <summary>
@@ -32,6 +34,7 @@ namespace Doctors
             InitializeComponent();
             TexBxLog.MaxLength = 30;
             TexBxOtchestv.MaxLength = 11;
+            TexBoxPolic.MaxLength = 16;
         }
 
         private void BtBack_Click(object sender, RoutedEventArgs e)
@@ -51,7 +54,7 @@ namespace Doctors
             using (SQLiteConnection connection = new SQLiteConnection(DBConnection.myConn))
             {
 
-                if (String.IsNullOrEmpty(TexBxLog.Text) || String.IsNullOrEmpty(PassBx.Password) || String.IsNullOrEmpty(TexBxOtchestv.Text) || String.IsNullOrEmpty(BtFam.Text) || String.IsNullOrEmpty(BtFirst.Text) || String.IsNullOrEmpty(BtName.Text) || String.IsNullOrEmpty(TexBoxPolic.Text))
+                if (String.IsNullOrEmpty(TexBxLog.Text) || String.IsNullOrEmpty(PassBx.Password) || String.IsNullOrEmpty(TexBxOtchestv.Text) || String.IsNullOrEmpty(BtFam.Text) || String.IsNullOrEmpty(TexBoxMail.Text) || String.IsNullOrEmpty(TexBoxPolic.Text))
                 {
                     MessageBox.Show("Заполните поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -90,11 +93,48 @@ namespace Doctors
                         MessageBox.Show("Телефон занят", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         pr2 = 1;
                     }
-                    if (pr == 0 && pr2 == 0)
+                    string query4 = $@"SELECT  COUNT(1) FROM Registrs WHERE Mail=@Mail";
+                    SQLiteCommand cmd4 = new SQLiteCommand(query4, connection);
+                    cmd2.Parameters.AddWithValue("@Mail", TexBoxMail.Text.ToLower());
+                    int count4 = Convert.ToInt32(cmd2.ExecuteScalar());
+                    int pr3 = 0;
+                    if (count2 == 1)
                     {
-                        
+                        MessageBox.Show("Mail занят", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        pr2 = 1;
+                    }
+                    if (pr == 0 && pr2 == 0 && pr3 == 0)
+                    {
+                        try
                         {
-                            string query3 = $@"INSERT INTO Registrs ('Login','Phone','Pass','Surname','Name','MiddleName','Policy') VALUES (@Login,@Phone,@Pass,@Surname,@Name,@MiddleName,@Policy)";
+                            SmtpClient Smtp = new SmtpClient("smtp.mail.ru");
+                            Smtp.UseDefaultCredentials = true;
+                            Smtp.EnableSsl = true;
+                            Smtp.Credentials = new NetworkCredential("yarik.test@mail.ru", "UkRjn459Xwf2MNXDS6Zm");
+                            MailMessage Message = new MailMessage();
+                            Message.From = new MailAddress("yarik.test@mail.ru");
+                            Message.To.Add(new MailAddress(TexBoxMail.Text));
+                            Message.To.Add(new MailAddress(TexBoxMail.Text));
+                            Message.Subject = "Учёт записей к врачу.";
+                            Message.Body = "Успешная регистрация. На это сообще не нужно отвечать.";
+                            Smtp.Send(Message);
+                            //MessageBox.Show("На вашу почту выслан код для проверки, введите его, чтобы продолжить", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                            Saver.Proverka = 0;
+
+                        }
+                        catch (FormatException)
+                        {
+                            MessageBox.Show("Введенная почта некорректна.");
+                            Saver.Proverka = 1;
+                        }
+                        catch (SmtpFailedRecipientsException)
+                        {
+                            MessageBox.Show("Введенная почта некорректна.");
+                            Saver.Proverka = 1;
+                        }
+                        if (Saver.Proverka == 0)
+                        {
+                            string query3 = $@"INSERT INTO Registrs ('Login','Phone','Pass','Surname','Policy','Mail') VALUES (@Login,@Phone,@Pass,@Surname,@Mail,@Policy)";
                             SQLiteCommand cmd3 = new SQLiteCommand(query3, connection);
                             try
                             {
@@ -102,10 +142,9 @@ namespace Doctors
                                 cmd3.Parameters.AddWithValue("@Pass", PassBx.Password);
                                 cmd3.Parameters.AddWithValue("@Phone", TexBxOtchestv.Text.ToLower());
                                 cmd3.Parameters.AddWithValue("@Surname", BtFam.Text.ToLower());
-                                cmd3.Parameters.AddWithValue("@Name", BtName.Text.ToLower());
-                                cmd3.Parameters.AddWithValue("@MiddleName", BtFirst.Text.ToLower());
+                                cmd3.Parameters.AddWithValue("@Mail", TexBoxMail.Text.ToLower());
                                 cmd3.Parameters.AddWithValue("@Policy", TexBoxPolic.Text.ToLower());
-                                cmd3.ExecuteNonQuery();
+                                //cmd3.ExecuteNonQuery();
                                 MessageBox.Show("Проверка пройдена. Аккаунт зарегистрирован.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                                 Autoris Aftoriz = new Autoris();
                                 this.Close();
@@ -122,4 +161,4 @@ namespace Doctors
             }
         }
     }
-}
+ }

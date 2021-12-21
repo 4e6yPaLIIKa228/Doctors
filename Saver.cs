@@ -9,5 +9,6 @@ namespace Doctors
     class Saver
     {
         public static string Login = "";
+        public static int Proverka = 0;
     }
 }
