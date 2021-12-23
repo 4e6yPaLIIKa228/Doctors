@@ -169,6 +169,7 @@ namespace Doctors
                 }
             }
         }
+
         public int i = 0;
         private void BtFam_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

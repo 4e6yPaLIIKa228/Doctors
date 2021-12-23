@@ -31,6 +31,8 @@ namespace Doctors
         {
             InitializeComponent();
             CbFill();
+            //InfoForComBoMedic();
+            //InfoForComBoTime();
         }
 
         private void BtInfo_Click(object sender, RoutedEventArgs e)
@@ -47,41 +49,41 @@ namespace Doctors
                 {
                     connection.Open();
                     string query1 = $@"SELECT * FROM Specialists"; // Типы
-                    string query2 = $@"SELECT * FROM Medics"; // Состояние
-                    string query3 = $@"SELECT * FROM Times"; // Кабинеты
+                    //string query2 = $@"SELECT * FROM Medics"; // Состояние
+                    //string query3 = $@"SELECT * FROM Times"; // Кабинеты
                   
                     //----------------------------------------------
                     SQLiteCommand cmd1 = new SQLiteCommand(query1, connection);
-                    SQLiteCommand cmd2 = new SQLiteCommand(query2, connection);
-                    SQLiteCommand cmd3 = new SQLiteCommand(query3, connection);
+                    //SQLiteCommand cmd2 = new SQLiteCommand(query2, connection);
+                    //SQLiteCommand cmd3 = new SQLiteCommand(query3, connection);
                     
                     //----------------------------------------------
                     SQLiteDataAdapter SDA1 = new SQLiteDataAdapter(cmd1);
-                    SQLiteDataAdapter SDA2 = new SQLiteDataAdapter(cmd2);
-                    SQLiteDataAdapter SDA3 = new SQLiteDataAdapter(cmd3);
+                    //SQLiteDataAdapter SDA2 = new SQLiteDataAdapter(cmd2);
+                    //SQLiteDataAdapter SDA3 = new SQLiteDataAdapter(cmd3);
                     
                     //----------------------------------------------
                     DataTable dt1 = new DataTable("Specialists");
-                    DataTable dt2 = new DataTable("Medics");
-                    DataTable dt3 = new DataTable("Times");
+                    //DataTable dt2 = new DataTable("Medics");
+                    //DataTable dt3 = new DataTable("Times");
                    
                     //----------------------------------------------
                     SDA1.Fill(dt1);
-                    SDA2.Fill(dt2);
-                    SDA3.Fill(dt3);
+                    //SDA2.Fill(dt2);
+                    //SDA3.Fill(dt3);
                    
                     //----------------------------------------------
                     CbSpec.ItemsSource = dt1.DefaultView;
                     CbSpec.DisplayMemberPath = "Special";
                     CbSpec.SelectedValuePath = "ID";
                     //----------------------------------------------
-                    CbDoc.ItemsSource = dt2.DefaultView;
-                    CbDoc.DisplayMemberPath = "Medic";
-                    CbDoc.SelectedValuePath = "ID";
-                    //----------------------------------------------
-                    CbTime.ItemsSource = dt3.DefaultView;
-                    CbTime.DisplayMemberPath = "Time";
-                    CbTime.SelectedValuePath = "ID";
+                    //CbDoc.ItemsSource = dt2.DefaultView;
+                    //CbDoc.DisplayMemberPath = "Medic";
+                    //CbDoc.SelectedValuePath = "ID";
+                    ////----------------------------------------------
+                    //CbTime.ItemsSource = dt3.DefaultView;
+                    //CbTime.DisplayMemberPath = "Watch";
+                    //CbTime.SelectedValuePath = "ID";
                     //----------------------------------------------
                     //CbBrand.ItemsSource = dt4.DefaultView;
                     //CbBrand.DisplayMemberPath = "Brand";
@@ -101,13 +103,59 @@ namespace Doctors
                 }
             }
         }
+        public void InfoForComBoMedic()
+        {
+        if (CbSpec.SelectedIndex != -1)
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(DBConnection.myConn))
+                {
+                    connection.Open();
+                    int id;
+                    bool resultClass = int.TryParse(CbSpec.SelectedValue.ToString(), out id);
+                    string query = $@"SELECT * FROM Medics WHERE Medics.ID =  '{id}';"; // Типы
+                    SQLiteCommand cmd = new SQLiteCommand(query, connection);
+                    SQLiteDataAdapter SDA = new SQLiteDataAdapter(cmd);
+                    DataTable dt = new DataTable("Specialists");
+                    SDA.Fill(dt);
+                    CbDoc.ItemsSource = dt.DefaultView;
+                    CbDoc.DisplayMemberPath = "Medic";
+                    CbDoc.SelectedValuePath = "ID";
+                }
+            }
+   
+    }
 
+        public void InfoForComBoTime()
+        {
+            if (DpDate.Text != "" && CbDoc.SelectedIndex != -1)
+            {
+               
+                using (SQLiteConnection connection = new SQLiteConnection(DBConnection.myConn))
+                {
+                    connection.Open();
+                    int id, id2;
+                    bool resultClass = int.TryParse(CbSpec.SelectedValue.ToString(), out id);
+                    bool resultClass2 = int.TryParse(CbDoc.SelectedValue.ToString(), out id2);
+                    string query = $@"SELECT Times.Watch,Times.ID FROM Vrachis 
+                                      JOIN Times On Vrachis.IDTime = Times.ID
+                                      WHERE Vrachis.IDSpecial = ('{id}') AND Vrachis.IDNameDoc = ('{id2}');"; 
+                    SQLiteCommand cmd = new SQLiteCommand(query, connection);
+                    SQLiteDataAdapter SDA = new SQLiteDataAdapter(cmd);
+                    DataTable dt = new DataTable("Times");
+                    SDA.Fill(dt);
+                    CbWatch.ItemsSource = dt.DefaultView;
+                    CbWatch.DisplayMemberPath = "Watch";
+                    CbWatch.SelectedValuePath = "ID";
+                   
+                }
+            }
+        }
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             using (SQLiteConnection connection = new SQLiteConnection(DBConnection.myConn))
             {
                 connection.Open();
-                if (CbSpec.SelectedIndex == -1 || CbDoc.SelectedIndex == -1 || CbTime.SelectedIndex == -1 || String.IsNullOrEmpty(DpDate.Text))
+                if (CbSpec.SelectedIndex == -1 || CbDoc.SelectedIndex == -1 || CbWatch.SelectedIndex == -1 || String.IsNullOrEmpty(DpDate.Text))
                 {
                     MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -116,7 +164,7 @@ namespace Doctors
                     int id, id2, id3/*, id4, id5, id6*/;
                     bool resultClass = int.TryParse(CbSpec.SelectedValue.ToString(), out id);
                     bool resultKab = int.TryParse(CbDoc.SelectedValue.ToString(), out id2);
-                    bool resultCon = int.TryParse(CbTime.SelectedValue.ToString(), out id3);
+                    bool resultCon = int.TryParse(CbWatch.SelectedValue.ToString(), out id3);
                     //bool resultTitl = int.TryParse(CbTitle.SelectedValue.ToString(), out id4);
                     //bool resultBrand = int.TryParse(CbBrand.SelectedValue.ToString(), out id5);
                     //bool resultModel = int.TryParse(CbModel.SelectedValue.ToString(), out id6);
@@ -126,7 +174,8 @@ namespace Doctors
                     //var idtype = CbClass.Text;
                     //var idcon = CbCondition.Text;
                     var startWork = DpDate.Text; //SELECT  COUNT(1) FROM Doctors WHERE IDSpecialist=('1') AND IDMedic=('1') AND IDTime=('20.12.2021') AND IDDay=('1')
-                    string query = $@"SELECT  COUNT(1) FROM Doctors WHERE IDSpecialist=@IDSpecialist AND IDMedic=@IDMedic AND IDDay=@IDDay AND IDTime=@IDTime";
+                    
+                    string query = $@"SELECT  COUNT(1) FROM Records WHERE IDSpecialist=@IDSpecialist AND IDMedic=@IDMedic AND IDDay=@IDDay AND IDTime=@IDTime";
                     SQLiteCommand cmd = new SQLiteCommand(query, connection);
                     cmd.Parameters.AddWithValue("@IDSpecialist", id);
                     cmd.Parameters.AddWithValue("@IDMedic", id2);
@@ -160,5 +209,25 @@ namespace Doctors
                 }
             }
         }
+
+        private void CbSpec_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            InfoForComBoMedic();
+        }
+        private void DpDate_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            //InfoForComBoTime();
+        }
+
+        private void CbDoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //InfoForComBoTime();
+        }
+
+        private void DpDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            InfoForComBoTime();
+        }
     }
+    
 }

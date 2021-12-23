@@ -70,7 +70,6 @@ C:\Users\Administrator\Desktop\Практика\Doctors\bin\Debug\System.Data.SQ
 C:\Users\Administrator\Desktop\Практика\Doctors\bin\Debug\EntityFramework.xml
 C:\Users\Administrator\Desktop\Практика\Doctors\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Administrator\Desktop\Практика\Doctors\bin\Debug\System.Data.SQLite.xml
-C:\Users\Administrator\Desktop\Практика\Doctors\obj\Debug\Doctors.csprojAssemblyReference.cache
 C:\Users\Administrator\Desktop\Практика\Doctors\obj\Debug\Autoris.g.cs
 C:\Users\Administrator\Desktop\Практика\Doctors\obj\Debug\MainWindow.g.cs
 C:\Users\Administrator\Desktop\Практика\Doctors\obj\Debug\Menu.g.cs
@@ -154,3 +153,4 @@ C:\Users\Student\Desktop\Doctors-main\obj\Debug\Doctors.csproj.CoreCompileInputs
 C:\Users\Student\Desktop\Doctors-main\obj\Debug\Doctors.csproj.CopyComplete
 C:\Users\Student\Desktop\Doctors-main\obj\Debug\Doctors.exe
 C:\Users\Student\Desktop\Doctors-main\obj\Debug\Doctors.pdb
+C:\Users\Administrator\Desktop\Практика\Doctors\obj\Debug\Doctors.csprojAssemblyReference.cache
