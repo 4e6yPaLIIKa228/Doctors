@@ -109,6 +109,8 @@ namespace Doctors
             {
                 using (SQLiteConnection connection = new SQLiteConnection(DBConnection.myConn))
                 {
+                    CbWatch.SelectedIndex = -1;
+                    DpDate.Text = "";
                     connection.Open();
                     int id;
                     bool resultClass = int.TryParse(CbSpec.SelectedValue.ToString(), out id);
@@ -186,15 +188,30 @@ namespace Doctors
                     int pr = 0;
                     if (count == 1)
                     {
-                        MessageBox.Show("Данное время  в этот день занято", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Данное время в этот день занято", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         pr = 1;
                     }
                     if (pr == 0)
                     {
-                        string query2 = $@"INSERT INTO Doctors(IDSpecialist,IDMedic,IDTime,IDDay,Login) values ('{id}','{id2}','{id3}','{startWork}','{UserAdd}');";
+                        string query2 = $@"INSERT INTO Records(IDSpecialist,IDMedic,IDTime,IDDay,Login) values ('{id}','{id2}','{id3}','{startWork}','{UserAdd}');";
                         SQLiteCommand cmd2 = new SQLiteCommand(query2, connection);
                         try
                         {
+                            string query3 = $@"SELECT Mail FROM Users WHERE Users.ID = '{Saver.ID}';";
+                            SQLiteCommand cmd3 = new SQLiteCommand(query3, connection);
+                            //string strI = (string)cmd.ExecuteScalar();
+                            string getMail = (string)cmd3.ExecuteScalar();
+                            SmtpClient Smtp = new SmtpClient("smtp.mail.ru", 25);
+                            Smtp.UseDefaultCredentials = true;
+                            Smtp.EnableSsl = true;
+                            Smtp.Credentials = new NetworkCredential("fujiwara_1990@mail.ru", "5cFZ8MB4w731QH9zNAVW");
+                            MailMessage Message = new MailMessage();
+                            Message.From = new MailAddress("fujiwara_1990@mail.ru");
+                            Message.To.Add(new MailAddress(getMail));
+                            //Message.To.Add(new MailAddress(TexBoxMail.Text));
+                            Message.Subject = "Учёт записей к врачу.";
+                            Message.Body = "Ваш талон:  ";
+                            Smtp.Send(Message);
                             MessageBox.Show("Вы записались к врачу");
                             cmd2.ExecuteNonQuery();
 

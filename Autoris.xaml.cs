@@ -72,6 +72,7 @@ namespace Doctors
                             cmd2.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
                             int countID = Convert.ToInt32(cmd2.ExecuteScalar());
                             Saver.Login = TexBxLog.Text.ToLower();
+                            //Saver.Mail = 
                             Saver.ID = countID;
                             connection.Close();
                             MessageBox.Show("Добро пожаловать!");

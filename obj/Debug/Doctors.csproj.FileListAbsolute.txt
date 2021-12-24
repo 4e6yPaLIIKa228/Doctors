@@ -154,3 +154,35 @@ C:\Users\Student\Desktop\Doctors-main\obj\Debug\Doctors.csproj.CopyComplete
 C:\Users\Student\Desktop\Doctors-main\obj\Debug\Doctors.exe
 C:\Users\Student\Desktop\Doctors-main\obj\Debug\Doctors.pdb
 C:\Users\Administrator\Desktop\Практика\Doctors\obj\Debug\Doctors.csprojAssemblyReference.cache
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\DoctorYhet.db
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\Doctors.exe.config
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\Doctors.exe
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\Doctors.pdb
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\EntityFramework.dll
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\System.Data.SQLite.dll
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\EntityFramework.xml
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\bin\Debug\System.Data.SQLite.xml
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.csproj.AssemblyReference.cache
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Autoris.g.cs
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\MainWindow.g.cs
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Menu.g.cs
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\User.g.cs
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\App.g.cs
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors_Content.g.cs
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors_MarkupCompile.cache
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors_MarkupCompile.lref
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Autoris.baml
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\MainWindow.baml
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Menu.baml
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\User.baml
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.g.resources
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.Properties.Resources.resources
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.csproj.GenerateResource.cache
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.csproj.CoreCompileInputs.cache
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.csproj.CopyComplete
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.exe
+C:\Users\студент.STD5\Desktop\Учет периферии\Doctors-main\obj\Debug\Doctors.pdb

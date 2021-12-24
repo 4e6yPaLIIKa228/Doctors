@@ -70,7 +70,7 @@ namespace Doctors
                 {
                     MessageBox.Show("Телефон должен быть 11 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                else if (TexBoxPolic.Text.Length != 11)
+                else if (TexBoxPolic.Text.Length != 16)
                 {
                     MessageBox.Show("Полис должен быть равен 16 символов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -152,7 +152,6 @@ namespace Doctors
                                 cmd3.Parameters.AddWithValue("@Login", TexBxLog.Text.ToLower());
                                 cmd3.Parameters.AddWithValue("@Pass", Pass);
                                 cmd3.Parameters.AddWithValue("@Mail", TexBoxMail.Text.ToLower());
-
                                 cmd3.ExecuteNonQuery();
                                 MessageBox.Show("Проверка пройдена. Аккаунт зарегистрирован.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                                 Autoris Aftoriz = new Autoris();
