@@ -152,6 +152,16 @@ namespace Doctors
                 }
             }
         }
+        private static string RndStr(int len) //геннератор пароля(временного)
+        {
+            string s = "", symb = "1234567890";
+            Random rnd = new Random();
+
+            for (int i = 0; i < len; i++)
+                s += symb[rnd.Next(0, symb.Length)];
+            return s;
+
+        }
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             using (SQLiteConnection connection = new SQLiteConnection(DBConnection.myConn))
@@ -198,9 +208,20 @@ namespace Doctors
                         try
                         {
                             string query3 = $@"SELECT Mail FROM Users WHERE Users.ID = '{Saver.ID}';";
+                            string query4 = $@"SELECT Specialists.Special FROM Specialists  WHERE ID = '{id}';";
+                            string query5 = $@"SELECT Medics.Medic FROM Medics  WHERE ID = '{id2}';";
+                            string query6 = $@"SELECT Times.Watch FROM Vrachis 
+                                      JOIN Times On Vrachis.IDTime = Times.ID
+                                      WHERE Vrachis.IDSpecial = ('{id}') AND Vrachis.IDNameDoc = ('{id2}');";
                             SQLiteCommand cmd3 = new SQLiteCommand(query3, connection);
+                            SQLiteCommand cmd4 = new SQLiteCommand(query4, connection);
+                            SQLiteCommand cmd5 = new SQLiteCommand(query5, connection);
+                            SQLiteCommand cmd6 = new SQLiteCommand(query6, connection);
                             //string strI = (string)cmd.ExecuteScalar();
                             string getMail = (string)cmd3.ExecuteScalar();
+                            string getSpecail = (string)cmd4.ExecuteScalar();
+                            string getMedic = (string)cmd5.ExecuteScalar();
+                            string getWatch = (string)cmd6.ExecuteScalar();
                             SmtpClient Smtp = new SmtpClient("smtp.mail.ru", 25);
                             Smtp.UseDefaultCredentials = true;
                             Smtp.EnableSsl = true;
@@ -209,8 +230,8 @@ namespace Doctors
                             Message.From = new MailAddress("fujiwara_1990@mail.ru");
                             Message.To.Add(new MailAddress(getMail));
                             //Message.To.Add(new MailAddress(TexBoxMail.Text));
-                            Message.Subject = "Учёт записей к врачу.";
-                            Message.Body = "Ваш талон:  ";
+                            Message.Subject = "Запись к врачу";
+                            Message.Body = "Ваш талон: " + RndStr(3) + '\n' + "Специалисит: " + getSpecail + '\n' + "Врач: " + getMedic + '\n' + "Дата: " + startWork + "\n" + "Время: " + getWatch;
                             Smtp.Send(Message);
                             MessageBox.Show("Вы записались к врачу");
                             cmd2.ExecuteNonQuery();
